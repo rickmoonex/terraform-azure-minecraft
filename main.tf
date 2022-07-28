@@ -39,7 +39,7 @@ resource "azurerm_container_group" "containers" {
     name   = "studio"
     image  = "hashicraft/minecraft:v1.18.2-fabric"
     cpu    = 1
-    memory = 1
+    memory = 4
 
     ports {
       port     = 25565
@@ -63,7 +63,7 @@ resource "azurerm_container_group" "containers" {
     }
 
     environment_variables = {
-      JAVA_MEMORY       = "1G",
+      JAVA_MEMORY       = "4G",
       MINECRAFT_MOTD    = "My Minecraft Server!!",
       WHITELIST_ENABLED = true
     }
