@@ -26,3 +26,46 @@ resource "azurerm_storage_share" "config_share" {
   storage_account_name = azurerm_storage_account.storage.name
   quota                = 1
 }
+
+resource "azurerm_container_group" "containers" {
+  name                = "minecraft"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  ip_address_type     = "public"
+  dns_name_label      = "moonenminecraftprod"
+  os_type             = "Linux"
+
+  container {
+    name   = "studio"
+    image  = "hashicraft/minecraft:v1.18.2-fabric"
+    cpu    = 1
+    memory = 1
+
+    ports {
+      port     = 25565
+      protocol = "TCP"
+    }
+
+    volume {
+      name                 = "world"
+      mount_path           = "/minecraft/world"
+      storage_account_name = azurerm_storage_account.storage.name
+      storage_account_key  = azurerm_storage_account.storage.primary_access_key
+      share_name           = azurerm_storage_share.world_share.name
+    }
+
+    volume {
+      name                 = "config"
+      mount_path           = "/minecraft/config"
+      storage_account_name = azurerm_storage_account.storage.name
+      storage_account_key  = azurerm_storage_account.storage.primary_access_key
+      share_name           = azurerm_storage_share.config_share.name
+    }
+
+    environment_variables = {
+      JAVA_MEMORY       = "1G",
+      MINECRAFT_MOTD    = "My Minecraft Server!!",
+      WHITELIST_ENABLED = true
+    }
+  }
+}
