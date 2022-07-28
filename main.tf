@@ -31,7 +31,7 @@ resource "azurerm_container_group" "containers" {
   name                = "minecraft"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  ip_address_type     = "public"
+  ip_address_type     = "Public"
   dns_name_label      = "moonenminecraftprod"
   os_type             = "Linux"
 
