@@ -66,7 +66,7 @@ resource "azurerm_container_group" "containers" {
       JAVA_MEMORY       = "4G",
       MINECRAFT_MOTD    = "My Minecraft Server!!",
       WHITELIST_ENABLED = true
-      GAMEMODE          = "survival"
+      GAME_MODE         = "survival"
       SPAWN_MONSTERS    = true
       SPAWN_ANIMALS     = true
       SPAWN_NPCS        = true
